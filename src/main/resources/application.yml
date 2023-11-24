@@ -1,0 +1,33 @@
+server:
+  port: 8084
+      
+spring:
+  application:
+    name: API-GATEWAY
+    
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: http://localhost:8081
+          predicates:
+            - Path=/kantar/user/**
+         
+        - id: RATING-SERVICE
+          uri: http://localhost:8083
+          predicates:
+            - Path=/kantar/rating/**
+        
+        - id: HOTEL-SERVICE
+          uri: http://localhost:8082
+          predicates:
+            - Path=/kantar/hotel/**
+            
+eureka:
+  client:
+    fetch-registry:  true
+    register-with-eureka: true
+    service-url:
+       defaultZone: http://localhost:8146/eureka
+  instance:
+    prefer-ip-address: true
